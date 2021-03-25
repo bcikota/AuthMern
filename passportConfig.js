@@ -28,11 +28,16 @@ module.exports = function (passport) {
         User.findById(id, function (err, user) {
             if(err) throw err;
 
-            const userInformation = {
-                username: user.username
-            };
-
-            done(err, userInformation);
+            if(user) {
+                const userInformation = {
+                    username: user.username
+                };
+    
+                done(err, userInformation);
+            } else {
+                console.log('user error');
+            }
+            
         });
     });
 
