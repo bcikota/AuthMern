@@ -26,7 +26,7 @@ module.exports = function (passport) {
 
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
-            if(user.username === null) throw err;
+            if(!user.username) throw err;
             const userInformation = {
                 username: user.username
             };
