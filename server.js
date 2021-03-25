@@ -28,10 +28,17 @@ mongoose.connect(`${process.env.START_MONGODB}${process.env.MONGODB_USERNAME}:${
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set('trust proxy', 1);
+
 app.use(session({
     secret: 'secretcode',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        sameSite: none,
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7 //One Week
+    }
 }));
 
 app.use(cookieParser('secretcode'));
