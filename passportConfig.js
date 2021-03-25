@@ -35,7 +35,11 @@ module.exports = function (passport) {
     
                 done(err, userInformation);
             } else {
-                console.log('user error');
+                const userInformation = {
+                    username: ''
+                };
+    
+                done(err, userInformation);
             }
             
         });
