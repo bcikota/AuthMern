@@ -26,12 +26,15 @@ module.exports = function (passport) {
 
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
-            if(!user.username) throw err;
-            const userInformation = {
-                username: user.username
-            };
-
-            done(err, userInformation);
+            if(user.username === null) {
+                console.log('username error');
+            } else {
+                const userInformation = {
+                    username: user.username
+                };
+    
+                done(err, userInformation);
+            }
         });
     });
 
