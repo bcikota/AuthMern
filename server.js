@@ -10,12 +10,19 @@ const bodyParser = require('body-parser');
 const User = require('./user');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+const cors = require('cors');
 
 
 //-------------------------END OF IMPORTS------------------------
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
+app.use(cors(
+    {
+        origin: 'http://localhost:3005',
+        credentials: true
+    }
+));
 
 mongoose.connect(`${process.env.START_MONGODB}${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}${process.env.END_MONGODB}`, {
     useNewUrlParser: true,
@@ -66,6 +73,7 @@ passport.use(new GoogleStrategy({
 //-------------------------END OF MIDDELWARE------------------------
 
 //ROUTES
+
 app.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) throw err;
@@ -80,7 +88,7 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-app.post('/register', (req, res) => {
+app.post('/sign-up', (req, res) => {
     User.findOne({ username: req.body.username }, async (err, doc) => {
         if (err) throw err;
         if (doc) {
@@ -93,13 +101,53 @@ app.post('/register', (req, res) => {
             });
 
             await newUser.save();
-            res.send('User Created');
+            res.send('User created');
         }
     });
 });
 
-app.get('/user', (req, res) => {
+app.get('/users/authUser', (req, res) => {
     res.send(req.user);
+});
+
+app.patch('/users/:userID/edit', async (req, res) => {
+    let id = req.params.userID;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    if (req.body.username === '') {
+
+        User.updateOne({ _id: id }, {
+            password: hashedPassword
+        }, (err, writeOpResult) => {
+            if (err) throw err;
+            res.send('Successfully updated');
+        });
+    } else {
+
+        User.updateOne({ _id: id }, {
+            username: req.body.username,
+            password: hashedPassword
+        }, (err, writeOpResult) => {
+            if (err) throw err;
+            res.send('Successfully updated');
+        });
+
+    }
+
+});
+
+app.delete('/users/:userID/delete', (req, res) => {
+    let id = req.params.userID;
+    User.deleteOne({_id: id}, (err) => {
+        if(err) throw err;
+        res.send('Successfully deleted user');
+    });
+});
+
+app.get('/users', (req, res) => {
+    User.find({}, (err, users) => {
+        if (err) throw err;
+        res.send(users);
+    });
 });
 
 
@@ -110,6 +158,7 @@ app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function (req, res) {
         // Successful authentication, redirect home.
+        // res.redirect('http://localhost:3005');
         res.redirect('/');
     });
 
@@ -127,5 +176,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT, () => {
-    console.log(`Server has started on port: ${PORT}!`);
+    console.log(`Server has started on port: ${PORT}`);
 });

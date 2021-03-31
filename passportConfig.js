@@ -30,13 +30,15 @@ module.exports = function (passport) {
 
             if(user) {
                 const userInformation = {
-                    username: user.username
+                    username: user.username,
+                    id: user._id
                 };
     
                 done(err, userInformation);
             } else {
                 const userInformation = {
-                    username: ''
+                    username: '',
+                    id: ''
                 };
     
                 done(err, userInformation);
