@@ -55,7 +55,7 @@ const User = () => {
 
 
                             <br />
-                            <div className="btn btn-primary delete-my-profile" onClick={deleteUser}>delete my profile</div>
+                            <div className="btn btn-primary delete-my-profile" onClick={deleteUser}>deactivate my profile</div>
                         </div>
                     }
 

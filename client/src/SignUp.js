@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "./GlobalContext";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import googleIcon from './images/google-icon.png'
 
 const SignUp = () => {
     let history = useHistory();
@@ -48,7 +49,9 @@ const SignUp = () => {
                 <button className="btn btn-primary">submit</button>
             </form>
             <div className="googleAuth">
-                <div className="btn btn-primary" onClick={signUpGoogle}>sign up with google</div>
+                <div className="btn btn-light" onClick={signUpGoogle}>
+                <img className="googleIcon" src={googleIcon} alt="google icon" />
+                sign up with google</div>
             </div>
         </div>
      );
