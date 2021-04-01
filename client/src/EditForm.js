@@ -3,7 +3,7 @@ import { useContext } from "react";
 import axios from "axios";
 
 const EditForm = () => {
-    const { user, url, editUsername, setEditUsername, editPassword, setEditPassword } = useContext(GlobalContext);
+    const { windowUrl, user, url, editUsername, setEditUsername, editPassword, setEditPassword } = useContext(GlobalContext);
 
     const edit = () => {
 
@@ -32,9 +32,7 @@ const EditForm = () => {
         })
             .then(res => {
                 console.log(res.data);
-                // window.open('http://localhost:3005', '_self');
-                // window.open('http://localhost:5000', '_self');
-                window.open('https://authmernapp.herokuapp.com', '_self');
+                window.open(windowUrl, '_self');
             });
     };
 

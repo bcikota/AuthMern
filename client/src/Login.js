@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 const Login = () => {
     let history = useHistory();
-    const { user, url, loginUsername, setLoginUserName, loginPassword, setLoginPassword } = useContext(GlobalContext);
+    const { windowUrl, url, loginUsername, setLoginUserName, loginPassword, setLoginPassword } = useContext(GlobalContext);
     const login = () => {
         axios({
             method: 'post',
@@ -31,9 +31,7 @@ const Login = () => {
 
                     // window.location.reload();
 
-                    // window.open('http://localhost:3005', '_self');
-                // window.open('http://localhost:5000', '_self');
-                window.open('https://authmernapp.herokuapp.com', '_self');
+                    window.open(windowUrl, '_self');
 
                 }
 

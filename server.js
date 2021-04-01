@@ -9,7 +9,6 @@ const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const User = require('./user');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const findOrCreate = require('mongoose-findorcreate');
 const cors = require('cors');
 
 
@@ -19,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 app.use(cors(
     {
-        origin: 'http://localhost:3005',
+        origin: 'http://localhost:3000',
         credentials: true
     }
 ));
@@ -158,7 +157,7 @@ app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function (req, res) {
         // Successful authentication, redirect home.
-        // res.redirect('http://localhost:3005');
+        // res.redirect('http://localhost:3000');
         res.redirect('/');
     });
 

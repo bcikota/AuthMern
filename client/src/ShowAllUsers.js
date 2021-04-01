@@ -3,7 +3,7 @@ import { GlobalContext } from "./GlobalContext";
 import axios from 'axios';
 
 const ShowAllUsers = () => {
-    const { url, } = useContext(GlobalContext);
+    const { windowUrl, url } = useContext(GlobalContext);
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
@@ -30,9 +30,7 @@ const ShowAllUsers = () => {
         })
             .then(res => {
                 console.log(res.data);
-                // window.open('http://localhost:3005', '_self');
-                // window.open('http://localhost:5000', '_self');
-                window.open('https://authmernapp.herokuapp.com', '_self');
+                window.open(windowUrl, '_self');
             })
             .catch((err) => {
                 console.log(err);

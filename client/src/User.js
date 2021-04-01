@@ -5,7 +5,7 @@ import { GlobalContext } from "./GlobalContext";
 import axios from 'axios';
 
 const User = () => {
-    const { user, url, foundUser } = useContext(GlobalContext);
+    const { windowUrl, user, url, foundUser } = useContext(GlobalContext);
 
     const logout = () => {
         axios({
@@ -15,9 +15,7 @@ const User = () => {
         })
             .then(res => {
                 console.log(res.data);
-                // window.open('http://localhost:3005', '_self');
-                // window.open('http://localhost:5000', '_self');
-                window.open('https://authmernapp.herokuapp.com', '_self');
+                window.open(windowUrl, '_self');
             });
     };
 

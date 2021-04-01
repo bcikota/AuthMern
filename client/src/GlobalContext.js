@@ -17,6 +17,10 @@ const GlobalContextProvider = (props) => {
 
     // const url = 'http://localhost:4000';
     const url = '';
+
+    // const windowUrl = 'http://localhost:3000';
+    // const windowUrl = 'http://localhost:5000';
+    const windowUrl = 'https://authmernapp.herokuapp.com';
     
     useEffect(() => {
         axios({
@@ -52,7 +56,8 @@ const GlobalContextProvider = (props) => {
                 user, setUser,
                 foundUser, setFoundUser,
                 editUsername, setEditUsername,
-                editPassword, setEditPassword
+                editPassword, setEditPassword,
+                windowUrl
             }
         }>
             {props.children}
